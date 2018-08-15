@@ -12,5 +12,5 @@
 - They can find their friends and follow them or they can follow other profiles that they find interesting.
 
 This repository will contain all the necessary files pertaining to our project.</br>
-For a more detailed description regarding the project refer to the SRS documentation that has been created with regards to our project. 
+For a more detailed description regarding the project, refer to the SRS documentation that has been created with regards to our project. 
 
