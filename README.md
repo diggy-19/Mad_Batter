@@ -9,10 +9,7 @@
 - a personalised pantry that stores all the ingredients present in your kitchen along with their quantities in real time and on the basis of that, be recommended recipes and get notifications as to whether or not a certain recipe is feasible to you.
 - share your own recipe with the world by uploading it on our website.
 - keep a record of all the recipes you've cooked and how many times they've been cooked.
-
->Users can also use this portal to share their own recipes.
-
->They can find their friends and follow them or they can follow other profiles that they find interesting.
+- They can find their friends and follow them or they can follow other profiles that they find interesting.
 
 This repository will contain all the necessary files pertaining to our project.</br>
 For a more detailed description regarding the project refer to the SRS documentation that has been created with regards to our project. 
