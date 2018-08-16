@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body bgcolor="#fff6e6">
+<svg width="500" height="200">
+<font face="Georgia" size="20" color="#331a00">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<form onsubmit="return checkForm(this);">
+<center><b>SIGNUP</b></font></center>
+</text>
+<p>
+<font face="Arial" size="5" color="#331a00" >
+<div style="padding-left:500px">
+FirstName: <input type="text" name="FirstName" value="" required><br>
+LastName: <input type="text" name="LastName" value="" required><br>
+Age: <input type="number" name="Age" value=""><br>
+Gender:
+<select>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+</select><br>
+Email: <input type="text" name="Email" id="Email" value="" required><br>
+Password: <input type="password" name="pw" value="" minlength="8" required><br>
+Confirm Password: <input type="password" name="cpw" value="" required><br>
+</div>
+<center><input type="submit" value="Signup"></center>
+</font>
+</p>
+</form>
+<script>
+function checkForm(form)
+{
+      if(form.pw.value!=form.cpw.value) 
+	 {
+        alert("Password does not match");
+        form.pw.focus();
+        return false;
+	}
+		if(form.Age.value<=0)
+	{
+		alert("Age should be greater than zero");
+		form.Age.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+</svg>
+</body>
+</html>
