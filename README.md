@@ -14,9 +14,9 @@
 This repository will contain all the necessary files pertaining to our project.</br>
 For a more detailed description regarding the project, refer to the SRS documentation that has been created with regards to our project. 
 
-For the Home Page, [click here](https://diggy-19.github.io/Mad_Batter/home_page)
-For the pantry, 
-For the login page,
-For the signup page,
+For the Home Page, [click here](https://diggy-19.github.io/Mad_Batter/home_page)</br>
+For the pantry, [click here](https://diggy-19.github.io/Mad_Batter/pantry)</br>
+For the profile page, [click here](https://diggy-19.github.io/Mad_Batter/profile)</br>
+For the signup page, [click here](https://diggy-19.github.io/Mad_Batter/RecipePage)</br>
 
 
