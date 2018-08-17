@@ -17,6 +17,7 @@ For a more detailed description regarding the project, refer to the SRS document
 For the Home Page, [click here](https://diggy-19.github.io/Mad_Batter/home_page)</br>
 For the pantry, [click here](https://diggy-19.github.io/Mad_Batter/pantry)</br>
 For the profile page, [click here](https://diggy-19.github.io/Mad_Batter/profile)</br>
-For the signup page, [click here](https://diggy-19.github.io/Mad_Batter/RecipePage)</br>
+For the signup page, [click here](https://diggy-19.github.io/Mad_Batter/signup)</br>
+For the recipe page, [click here](https://diggy-19.github.io/Mad_Batter/RecipePage)</br>
 
 
