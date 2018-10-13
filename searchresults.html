@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Search Results| Mad Batter</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="searchresults.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>
+                                  <span class="icon-bar"></span>                        
+                                </button>
+                <a class="navbar-brand" href="#myPage">Mad Batter</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar">
+                    <li><a href="#search">Search</a></li>
+                    <li><a href="#trending-recipes">Trending Recipes</a></li>
+                    <li><a href="#category">Categories</a></li>
+                    <li><a href="#bakehacks">BakeHacks</a> </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Trigger/Open The Login Modal -->
+                    <li><a href="#login"><button id="myBtn-login">LogIn</button></a></li>
+                    <!-- Trigger/Open The Signup Modal -->
+                    <li><a href="#signup"><button id="myBtn-signup">SignUp</button></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- The Login Modal -->
+    <div id="myModal-login" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close-login">&times;</span>
+            <h1>
+                <center>LOGIN</center>
+            </h1>
+
+            <form action=" " method="post" onsubmit="return checkForm(this);">
+                <div class="form-group">
+                    <label for="Inputname">Username</label>
+                    <input type="name" class="form-control" name="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Password</label>
+                    <input type="password" class="form-control" name="pw" required>
+                </div>
+                <br>
+                <center><button type="submit" name="submit">Submit</button></center>
+                <center>
+                    <font size=4px>New to Mad Batter?<br>Create account!</font>
+                </center>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- The Signup Modal -->
+    <div id="myModal-signup" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close-signup">&times;</span>
+
+            <h1>
+                <center>SIGNUP</center>
+            </h1>
+            <form onsubmit="return checkForm(this);" action="">
+                <div class="form-group">
+                    <label for="Inputname"> E-mail</label>
+                    <input type="name" class="form-control" name="Email" placeholder="Enter e-mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Password</label>
+                    <input type="password" class="form-control" name="Password" placeholder="Enter Password" minlength=8 required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Confirm Password</label>
+                    <input type="password" class="form-control" name="cpw" placeholder="Re-enter Password" minlength=8 required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Username</label>
+                    <input type="name" class="form-control" name="Username" placeholder="Enter User Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Firstname</label>
+                    <input type="name" class="form-control" name="Firstname" placeholder="Enter First Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputname"> Lastname</label>
+                    <input type="name" class="form-control" name="Lastname" placeholder="Enter Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="Inputdate">Age</label>
+                    <input type="number" class="form-control" name="Age" placeholder="Enter Age">
+                </div>
+                <div class="dropdown">
+                    <label>Gender</label><br>
+                    <select name="Gender">
+                        <option class="dropdown-item">Male</option>
+                        <option class="dropdown-item">Female</option> 
+                        <option class="dropdown-item">Other</option>  
+                    </select>
+                </div>
+
+                <br>
+                <center>
+                    <button type="submit">Submit</button>
+                </center>
+                <center>
+                    <font size=4px>Already have an account?<br>Log In</font>
+                </center>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- the search results cards -->
+    <h2>Round Card</h2>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <img src="Nutella-Cupcakes_Header.jpg" alt="Nutella Cupcakes" style="width:100%">
+                <div class="container">
+                    <div class="card-content">
+                        <h4><strong><a href="#!"> Nutella Cupcakes</a></strong></h4>
+                        <p class="desc-content"> We all love a yummy brownie, but sometimes it is fun to mix things up a little and add a twist to our favourite recipes. This brownie not only includes soft and squidgy marshmallows but also Fruit Bowl yoghurt raisins, so that
+                            practically makes this one of your five a day, right?! Kids will love helping to make these brownies as much as munching the end result. They are perfect for back to school lunch boxes and for snacking during the school holidays.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <img src="Nutella-Cupcakes_Header.jpg" alt="Nutella Cupcakes" style="width:100%">
+                <div class="container">
+                    <div class="card-content">
+                        <h4><strong><a href="#!"> Nutella Cupcakes</a></strong></h4>
+                        <p class="desc-content"> We all love a yummy brownie, but sometimes it is fun to mix things up a little and add a twist to our favourite recipes. This brownie not only includes soft and squidgy marshmallows but also Fruit Bowl yoghurt raisins, so that
+                            practically makes this one of your five a day, right?! Kids will love helping to make these brownies as much as munching the end result. They are perfect for back to school lunch boxes and for snacking during the school holidays.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <img src="Nutella-Cupcakes_Header.jpg" alt="Nutella Cupcakes" style="width:100%">
+                <div class="container">
+                    <div class="card-content">
+                        <h4><strong><a href="#!"> Nutella Cupcakes</a></strong></h4>
+                        <p class="desc-content"> We all love a yummy brownie, but sometimes it is fun to mix things up a little and add a twist to our favourite recipes. This brownie not only includes soft and squidgy marshmallows but also Fruit Bowl yoghurt raisins, so that
+                            practically makes this one of your five a day, right?! Kids will love helping to make these brownies as much as munching the end result. They are perfect for back to school lunch boxes and for snacking during the school holidays.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!----------- Footer ------------>
+    <div class="container">
+        <section style="height:80px;"></section>
+        <footer class="footer-bs">
+            <div class="row">
+                <div class="col-md-3 footer-brand animated fadeInLeft">
+                    <h2>MAD BATTER</h2>
+                    <p>A baking recipes search and share portal for all your baking needs with a personlaised pantry to help you keep track of your kitchen and to give you recipe recommendations on the basis of your kitchen's contents.</p>
+                    <p>© 2018 PVD</p>
+                </div>
+                <div class="col-md-4 footer-nav animated fadeInUp">
+                    <h4>Menu </h4>
+                    <div class="col-md-6">
+                        <ul class="pages">
+                            <li><a href="#">Search</a></li>
+                            <li><a href="#">Trending Recipes</a></li>
+                            <li><a href="#">Categories</a></li>
+                            <li><a href="#">Bake Hacks</a></li>
+                            <li><a href="#">My Profile</a></li>
+                            <li><a href="#">Log Out</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 footer-social animated fadeInDown">
+                    <h4>Follow Us</h4>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">RSS</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-ns animated fadeInRight">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe for more bake updates!!!!</p>
+                    <p>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <section style="text-align:center; margin:10px auto;">
+            <p>Designed by Pankti. Vridhi. Dhruvi.</a>
+            </p>
+        </section>
+
+    </div>
+    <script>
+        //login modal
+        // Get the login modal
+        var modal1 = document.getElementById('myModal-login');
+
+        // Get the button that opens the modal
+        var btn1 = document.getElementById("myBtn-login");
+
+        // Get the <span> element that closes the modal
+        var span1 = document.getElementsByClassName("close-login")[0];
+
+        // When the user clicks the button, open the modal 
+        btn1.onclick = function() {
+            modal1.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function() {
+            modal1.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal1) {
+                modal1.style.display = "none";
+            }
+        }
+
+        //end login
+
+        //signup modal
+        // Get the signup modal
+        var modal2 = document.getElementById('myModal-signup');
+
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("myBtn-signup");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementsByClassName("close-signup")[0];
+
+        // When the user clicks the button, open the modal 
+        btn2.onclick = function() {
+            modal2.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function() {
+            modal2.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal1) {
+                modal2.style.display = "none";
+            }
+        }
+
+        function checkForm(form) {
+            if (form.Password.value != form.cpw.value) {
+                alert("Password does not match");
+                form.Password.focus();
+                return false;
+            }
+            if (form.Age.value <= 0) {
+                alert("Age should be greater than zero");
+                form.Age.focus();
+                return false;
+            }
+            return true;
+        }
+        //end signup
+    </script>
+</body>
+
+</html>
