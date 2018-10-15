@@ -3,105 +3,143 @@ body {
     font-size: 18px;
 }
 
-.bg-img {
+.container {
+    color: #7b2e40;
+}
+
+.img-responsive {
+    padding-left: 20px;
+}
+
+.col-sm-10 {
+    align-content: center;
+}
+
+.h1 {
+    padding-top: 20px;
+    text-align: center;
+}
+
+.save-button {
+    float: right;
+}
+
+.table-wrapper {
+    width: 700px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.table-title {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+}
+
+.table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+
+.table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+
+.table-title .add-new i {
+    margin-right: 4px;
+}
+
+table.table {
+    table-layout: fixed;
+}
+
+table.table tr th,
+table.table tr td {
+    border-color: #e9e9e9;
+}
+
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+table.table th:last-child {
+    width: 100px;
+}
+
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}
+
+table.table td a.add {
+    color: #27C46B;
+}
+
+table.table td a.edit {
+    color: #FFC107;
+}
+
+table.table td a.delete {
+    color: #E34724;
+}
+
+table.table td i {
+    font-size: 19px;
+}
+
+table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
     position: relative;
-    width: 100%;
-    height: 100%;
-    background: url("Nutella-Cupcakes_Header_Cropped.jpeg") center center no-repeat;
-    background-size: cover;
+    top: 3px;
 }
 
-.bg-img:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.9));
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
 }
 
-.centered {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    text-align: center;
-    transform: translate(-50%, -50%);
-    color: #f7a7b2;
+table.table .form-control.error {
+    border-color: #f50000;
 }
 
-.img-title {
-    position: absolute;
-    color: #f7a7b2;
-    text-align: center;
-    left: 0;
-    right: 0;
-    top: 60%;
-    /*letter-spacing: 3px;*/
+table.table td .add {
+    display: none;
 }
 
-.thead-deep {
+.btn-block {
+    background-color: #d8494f;
+    color: #fff;
+}
+
+.list-group,
+.recipe-section {
+    padding-top: 50px;
+}
+
+.thead-deep,
+.th,
+.list-group-item-title {
     background-color: #89382c;
     color: #fff;
 }
 
-.ingredients-box,
-.about-box,
-.utensils {
-    background-color: #fcb6c5;
-    box-shadow: 5px 10px 18px #888888;
-}
-
-.description {
+.added-recipes {
     color: #7b2e40;
-    font-size: 20px;
-}
-
-.dropdown-divider {
-    border-top: 1px #7b2e40 dashed;
-}
-
-
-/*CSS FOR RATE BAR*/
-
-.rating {
-    display: inline-block;
-    color: #FFCA00;
-    align-content: center;
-}
-
-.rating-star {
-    padding: 0 5px;
-    cursor: pointer;
-    display: block;
-    float: right;
-    font-size: 30px;
-}
-
-.rating-star:after {
-    position: relative;
-    font-family: FontAwesome;
-    content: '\f006';
-}
-
-.rating-star.checked~.rating-star:after,
-.rating-star.checked:after {
-    content: '\f005';
-}
-
-.rating:hover .rating-star:after {
-    content: '\f006';
-}
-
-.rating-star:hover~.rating-star:after,
-.rating-star:hover:after {
-    content: '\f005' !important;
-}
-
-.btn-post {
-    background-color: #7b2e40;
-    color: #fff;
-    float: right;
 }
 
 
