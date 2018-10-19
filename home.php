@@ -1,148 +1,209 @@
+<?php
+session_start();
+include("connect.php");
+?>
+<?php
+if(isset($_GET['submit1']))
+{
+$Email=$_GET['Email'];
+$Pwd=$_GET['Password'];
+$Uname=$_GET['Username'];
+$Fname=$_GET['Firstname'];
+$Lname=$_GET['Lastname'];
+$Age=$_GET['Age'];
+$Gender=$_GET['Gender'];
+
+$sql = "INSERT INTO `user-profile`(`EmailID`, `Password`, `Username`, `FirstName`, `LastName`, `Age`, `Gender`)
+ VALUES ('$Email', '$Pwd', '$Uname', '$Fname', '$Lname', '$Age', '$Gender')";
+
+ if ($conn->query($sql) === TRUE) {
+    //echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+}
+
+if(isset($_POST['submit']))
+{
+    $user = $_POST['un'];
+    $pwd = $_POST['pw'];
+    $query = "SELECT `Username`,`Password` FROM `user-profile` where Username='$user' and Password ='$pwd'";
+    $result= mysqli_query($conn, $query);
+    $total = mysqli_num_rows($result);
+    if($total == true)
+    {
+      //echo 'Login Successful';
+      $_SESSION['user_name'] = $user;
+     header("Location:UserProfile.php");
+    }
+    else
+    {
+      echo 'Incorrect Username or password';
+
+    }
+}
+
+if(isset($_POST['search']))
+{
+    $recipe = $_POST['recipename'];
+    $query1 = "SELECT `RecipeName` FROM `recipe` where RecipeName LIKE '%$recipe%'";
+    $result1= mysqli_query($conn, $query1);
+    $total = mysqli_num_rows($result1);
+    if($total == true)
+    {
+		 $_SESSION['recipe_name'] = $recipe;
+      header("Location:searchlogin.php");
+    }
+    else
+    {
+      echo 'No such recipe';
+
+    }
+}
+
+?>   
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
-    <title>Home Page | Mad Batter</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="homepage_style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+   <link href='https://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet'>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>  
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="homepage_style.css">
 </head>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
-    <nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
-        <div class="container">
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">&#x2630;</button>=
-            
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar navbar-expand-md">
-                    <li class="nav-item"><a href="#search" class="nav-link">Mad Batter</a>
-                    </li>
-                    <li class="nav-item"><a href="#search" class="nav-link">Search</a>
-                    </li>
-                    <li class="nav-item"><a href="#trending-recipes" class="nav-link">Trending Recipes</a>
-                    </li>
-                    <li class="nav-item"><a href="#category" class="nav-link">Categories</a>
-                    </li>
-                    <li class="nav-item"><a href="#bakehacks" class="nav-link">BakeHacks</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav ml-auto">
-                    <!-- Trigger/Open The Login Modal -->
-                    <li class="nav-item"><a href="#login" class="nav-link"><button id="myBtn-login">LogIn</button></a>
-                    </li>
-                    <!-- Trigger/Open The Signup Modal -->
-                    <li class="nav-item"><a href="#signup" class="nav-link"><button id="myBtn-signup">SignUp</button></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-
-    <!-- The Login Modal -->
-    <div id="myModal-login" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-login">&times;</span>
-            <h1>
-                <center>LOGIN</center>
-            </h1>
-
-            <form action=" " method="post" onsubmit="return checkForm(this);">
-                <div class="form-group">
-                    <label for="Inputname">Username</label>
-                    <input type="name" class="form-control" name="Username" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Password</label>
-                    <input type="password" class="form-control" name="pw" required>
-                </div>
-                <br>
-                <center><button type="submit" name="submit">Submit</button></center>
-                <center>
-                    <font size=4px>New to Mad Batter?<br>Create account!</font>
-                </center>
-            </form>
+<nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">&#x2630;</button>=
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar navbar-expand-md">
+                <li class="nav-item"><a href="#search" class="nav-link">Mad Batter</a>
+                </li>
+                <li class="nav-item"><a href="#search" class="nav-link">Search</a>
+                </li>
+                <li class="nav-item"><a href="#trending-recipes" class="nav-link">Trending Recipes</a>
+                </li>
+                <li class="nav-item"><a href="#category" class="nav-link">Categories</a>
+                </li>
+                <li class="nav-item"><a href="#bakehacks" class="nav-link">BakeHacks</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                <!-- Trigger/Open The Login Modal -->
+                <li class="nav-item"><a href="#login" class="nav-link"><button id="myBtn-login">LogIn</button></a>
+                </li>
+                <!-- Trigger/Open The Signup Modal -->
+                <li class="nav-item"><a href="#signup" class="nav-link"><button id="myBtn-signup">SignUp</button></a>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
+<!-- The Login Modal -->
+   <div id="myModal-login" class="modal">
 
-    <!-- The Signup Modal -->
-    <div id="myModal-signup" class="modal">
+       <!-- Modal content -->
+       <div class="modal-content">
+           <span class="close-login">&times;</span>
+           <h1>
+               <center>LOGIN</center>
+           </h1>
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-signup">&times;</span>
+           <form action="" method="POST">
+               <div class="form-group">
+                   <label for="Inputname">Username</label>
+                   <input type="name" class="form-control" name="un" required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Password</label>
+                   <input type="password" class="form-control" name="pw" required>
+               </div>
+               <br>
+               <center><button type="submit" name="submit">Submit</button></center>
+               <center>
+                   <font size=4px>New to Mad Batter?<br>Create account!</font>
+               </center>
+           </form>
+       </div>
+   </div>
 
-            <h1>
-                <center>SIGNUP</center>
-            </h1>
-            <form onsubmit="return checkForm(this);" action="">
-                <div class="form-group">
-                    <label for="Inputname"> E-mail</label>
-                    <input type="name" class="form-control" name="Email" placeholder="Enter e-mail" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Password</label>
-                    <input type="password" class="form-control" name="Password" placeholder="Enter Password" minlength=8 required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Confirm Password</label>
-                    <input type="password" class="form-control" name="cpw" placeholder="Re-enter Password" minlength=8 required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Username</label>
-                    <input type="name" class="form-control" name="Username" placeholder="Enter User Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Firstname</label>
-                    <input type="name" class="form-control" name="Firstname" placeholder="Enter First Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Lastname</label>
-                    <input type="name" class="form-control" name="Lastname" placeholder="Enter Last Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputdate">Age</label>
-                    <input type="number" class="form-control" name="Age" placeholder="Enter Age">
-                </div>
-                <div class="dropdown">
-                    <label>Gender</label><br>
-                    <select name="Gender">
-                        <option class="dropdown-item">Male</option>
-                        <option class="dropdown-item">Female</option> 
-                        <option class="dropdown-item">Other</option>  
-                    </select>
-                </div>
+   <!-- The Signup Modal -->
+   <div id="myModal-signup" class="modal">
+
+       <!-- Modal content -->
+       <div class="modal-content">
+           <span class="close-signup">&times;</span>
+
+           <h1>
+               <center>SIGNUP</center>
+           </h1>
+           <form action="" method="GET" onsubmit="return checkForm(this);">
+               <div class="form-group">
+                   <label for="Inputname"> E-mail</label>
+                   <input type="name" class="form-control" name="Email" placeholder="Enter e-mail" required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Password</label>
+                   <input type="password" class="form-control" name="Password" placeholder="Enter Password" minlength=8 required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Confirm Password</label>
+                   <input type="password" class="form-control" name="cpw" placeholder="Re-enter Password" minlength=8 required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Username</label>
+                   <input type="name" class="form-control" name="Username" placeholder="Enter User Name" required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Firstname</label>
+                   <input type="name" class="form-control" name="Firstname" placeholder="Enter First Name" required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputname"> Lastname</label>
+                   <input type="name" class="form-control" name="Lastname" placeholder="Enter Last Name" required>
+               </div>
+               <div class="form-group">
+                   <label for="Inputdate">Age</label>
+                   <input type="number" class="form-control" name="Age" placeholder="Enter Age">
+               </div>
+               <div class="dropdown">
+                   <label>Gender</label><br>
+                   <select name="Gender">
+                       <option class="dropdown-item">Male</option>
+                       <option class="dropdown-item">Female</option>
+                       <option class="dropdown-item">Other</option> 
+                   </select>
+               </div>
 
 
-                <br>
-                <center>
-                    <button type="submit">Submit</button>
-                </center>
-                <center>
-                    <font size=4px>Already have an account?<br>Log In</font>
-                </center>
-            </form>
-        </div>
-    </div>
-
+               <br>
+               <center>
+                   <button type="submit" name="submit1">Submit</button>
+               </center>
+               <center>
+                   <font size=4px>Already have an account?<br>Log In</font>
+               </center>
+           </form>
+       </div>
+   </div>
+   <form class="form-horizontal" role="form" action="" method="POST">
     <!--parallax scrolling effect-->
-    <div class="bleh">
+    <div class="bgimg-1">
     </div>
-    <div class="search" id="search" style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
+    <div class="search" style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
         <div class="container">
             <div class="row">
                 <p></p>
@@ -157,17 +218,19 @@
                 <p></p>
             </div>
             <div class="row">
-                <!-- <div class="container"> -->
+               <!-- <div class="container"> -->
                 <!-- <div class="row"> -->
+				
                 <div class="col-md-12">
+				
                     <div class="input-group" id="adv-search">
-                        <input type="text" class="form-control" placeholder="Search..." />
-                        <div class="input-group-btn">
+                        <input type="text" class="form-control" name="recipename" placeholder="Search..." >
+    <!--                    <div class="input-group-btn">
                             <div class="btn-group" role="group">
                                 <div class="dropdown dropdown-lg">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                    <button type="submit" class="btn btn-default dropdown-toggle"  data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <form class="form-horizontal" role="form">
+                                        
                                             <div class="form-group">
                                                 <label for="filter">Skill Level</label>
                                                 <select class="form-control">
@@ -187,7 +250,7 @@
                                             <div class="form-group">
                                                 <label for="filter">Prep Time</label>
                                                 <select class="form-control">
-                                                            <option value="0" seleced>10-20 mins</option>
+                                                            <option value="0" selected>10-20 mins</option>
                                                             <option value="1">20-30 mins</option>
                                                             <option value="2">30-40 mins</option>
                                                             <option value="3">40-50 mins</option>
@@ -197,7 +260,7 @@
                                             <div class="form-group">
                                                 <label for="filter">Cook Time Time</label>
                                                 <select class="form-control">
-                                                            <option value="0" seleced>10-20 mins</option>
+                                                            <option value="0" selected>10-20 mins</option>
                                                             <option value="1">20-30 mins</option>
                                                             <option value="2">30-40 mins</option>
                                                             <option value="3">40-50 mins</option>
@@ -205,29 +268,27 @@
                                                         </select>
                                             </div>
                                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
-                                        </form>
-                                    </div>
+                                            </div>
                                 </div>background-
-                                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </div>
+                                <button type="button" class="btn btn-primary" name="search1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </div>-->
                         </div>
                     </div>
+					
                 </div>
             </div>
         </div>
     </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-5">
         </div>
-        <div class="col-sm-2">
-            <button class="button rounded-button">MY  PANTRY</button>
-        </div>
+      
 
         <div class="col-sm-1">
-            <button class="button rounded-button">SEARCH</button>
+            <button class="button rounded-button" name="search">SEARCH</button>
         </div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-5"></div>
     </div>
     <div class="row">
         <p></p>
@@ -237,7 +298,7 @@
     </div>
     </div>
     </div>
-
+</form>
     <div class="trending-recipes" id="trending-recipes">
         <div class="content">
             <div class="container-fluid">
@@ -313,7 +374,7 @@
                         <div class="horizontal__card_categories"><img class="cate_image" src="Marshmallow-Brownie_HEADER.jpg" alt="Marshmallow Brownies">
                             <div class="center">Brownies</div>
                         </div>
-                        <div class="horizontal__card_categories"><img class="cate_image" src="Truvia-Chocolate-Chip-Cookies_Header.jpg" alt="Chocochip Cookies">
+                        <div class="horizontal__card_categories"><img class="cate_image" src="https://www.handletheheat.com/wp-content/uploads/2018/02/BAKERY-STYLE-CHOCOLATE-CHIP-COOKIES-9-550x550.jpg" alt="Chocochip Cookies">
                             <div class="center">Cookies</div>
                         </div>
                         <!-- <div class="horizontal__card_categories">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero ipsa odit obcaecati, velit commodi enim quod amet veritatis eum! Temporibus voluptates qui aspernatur quaerat rem nobis dicta similique obcaecati porro?</div>
@@ -407,7 +468,8 @@
                     </section>
 
                 </div>
-                <script>
+                
+<script>
                     //smooth scrolling to that section of the webpage
                     $(document).ready(function() {
                         // Add smooth scrolling to all links in navbar + footer link
@@ -443,79 +505,76 @@
                         });
                     })
 
+       //login modal
+       // Get the login modal
+       var modal1 = document.getElementById('myModal-login');
 
+       // Get the button that opens the modal
+       var btn1 = document.getElementById("myBtn-login");
 
-                    //login modal
-                    // Get the login modal
-                    var modal1 = document.getElementById('myModal-login');
+       // Get the <span> element that closes the modal
+       var span1 = document.getElementsByClassName("close-login")[0];
 
-                    // Get the button that opens the modal
-                    var btn1 = document.getElementById("myBtn-login");
+       // When the user clicks the button, open the modal
+       btn1.onclick = function() {
+           modal1.style.display = "block";
+       }
 
-                    // Get the <span> element that closes the modal
-                    var span1 = document.getElementsByClassName("close-login")[0];
+       // When the user clicks on <span> (x), close the modal
+       span1.onclick = function() {
+           modal1.style.display = "none";
+       }
 
-                    // When the user clicks the button, open the modal 
-                    btn1.onclick = function() {
-                        modal1.style.display = "block";
-                    }
+       // When the user clicks anywhere outside of the modal, close it
+       window.onclick = function(event) {
+           if (event.target == modal1) {
+               modal1.style.display = "none";
+           }
+       }
 
-                    // When the user clicks on <span> (x), close the modal
-                    span1.onclick = function() {
-                        modal1.style.display = "none";
-                    }
+       //end login
 
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal1) {
-                            modal1.style.display = "none";
-                        }
-                    }
+       //signup modal
+       // Get the signup modal
+       var modal2 = document.getElementById('myModal-signup');
 
-                    //end login
+       // Get the button that opens the modal
+       var btn2 = document.getElementById("myBtn-signup");
 
-                    //signup modal
-                    // Get the signup modal
-                    var modal2 = document.getElementById('myModal-signup');
+       // Get the <span> element that closes the modal
+       var span2 = document.getElementsByClassName("close-signup")[0];
 
-                    // Get the button that opens the modal
-                    var btn2 = document.getElementById("myBtn-signup");
+       // When the user clicks the button, open the modal
+       btn2.onclick = function() {
+           modal2.style.display = "block";
+       }
 
-                    // Get the <span> element that closes the modal
-                    var span2 = document.getElementsByClassName("close-signup")[0];
+       // When the user clicks on <span> (x), close the modal
+       span2.onclick = function() {
+           modal2.style.display = "none";
+       }
 
-                    // When the user clicks the button, open the modal 
-                    btn2.onclick = function() {
-                        modal2.style.display = "block";
-                    }
-
-                    // When the user clicks on <span> (x), close the modal
-                    span2.onclick = function() {
-                        modal2.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal1) {
-                            modal2.style.display = "none";
-                        }
-                    }
-
-                    function checkForm(form) {
-                        if (form.Password.value != form.cpw.value) {
-                            alert("Password does not match");
-                            form.Password.focus();
-                            return false;
-                        }
-                        if (form.Age.value <= 0) {
-                            alert("Age should be greater than zero");
-                            form.Age.focus();
-                            return false;
-                        }
-                        return true;
-                    }
-                    //end signup
-                </script>
+       // When the user clicks anywhere outside of the modal, close it
+       window.onclick = function(event) {
+           if (event.target == modal2) {
+               modal2.style.display = "none";
+           }
+       }
+	 
+       function checkForm(form) {
+           if (form.Password.value != form.cpw.value) {
+               alert("Password does not match");
+               form.Password.focus();
+               return false;
+           }
+           if (form.Age.value <= 0) {
+               alert("Age should be greater than zero");
+               form.Age.focus();
+               return false;
+           }
+           return true;
+       }
+       //end signup
+ </script>  
 </body>
-
 </html>

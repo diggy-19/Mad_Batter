@@ -1,148 +1,611 @@
+<?php
+session_start();
+include("connect.php");
+?>
+<?php
+$user= $_SESSION['user_name'];
+if(isset($_POST['search']))
+{
+    $recipe = $_POST['recipename'];
+    $query1 = "SELECT `RecipeName` FROM `recipe` where RecipeName LIKE '%$recipe%'";
+    $result1= mysqli_query($conn, $query1);
+    $total = mysqli_num_rows($result1);
+    if($total == true)
+    {
+		 $_SESSION['recipe_name'] = $recipe;
+      header("Location:searchresults.php");
+    }
+    else
+    {
+      echo 'No such recipe';
+
+    }
+}
+
+if(isset($_POST['gotopantry']))
+{
+	$user= $_SESSION['user_name'];
+	  header("Location:UserProfile.php");
+}
+
+if(isset($_POST['pantrysearch']))
+{
+   // $recipe = $_POST['recipename'];
+   $email="SELECT EmailID from `user-profile` where Username LIKE '$user'";
+    $query1 = "SELECT unique `RecipeName` FROM `recipe-ingredients` where Ingredient IN(Select Ingredient FROM `user-pantry` where EmailID LIKE '$email') ";
+    $result1= mysqli_query($conn, $query1);
+    $total = mysqli_num_rows($result1);
+    if($total == true)
+    {
+		 while($row = mysqli_fetch_assoc($result1)){
+        $rn=$row['RecipeName'];
+		 }
+	
+		 $_SESSION['pantry'] = $rn;
+      header("Location:pantrysearch.php");
+    }
+    else
+    {
+		header("Location:pantrysearch.php");
+      echo 'No such recipe';
+
+    }
+}
+
+?>   
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
-    <title>Home Page | Mad Batter</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="homepage_style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+   <link href='https://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet'>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>  
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><style type="text/css">
 
+/* * {
+    box-sizing: border-box;
+} */
+
+body {
+    margin: 0;
+    background-color: #fff;
+    height: 100%;
+    padding: 0;
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    height: 100%;
+    color: #7b2e40;
+}
+
+
+/*NAVBAR*/
+
+.navbar {
+    margin-bottom: 0;
+    background-color: #7b2e40;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+    font-variant: small-caps;
+}
+
+.navbar li a,
+.navbar .navbar-brand {
+    color: #fff !important;
+}
+
+.navbar-nav li a:hover,
+.navbar-nav li.active a {
+    color: #7b2e40 !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #7b2e40 !important;
+}
+
+.collapse navbar-collapse {
+    border-top: none;
+}
+
+
+/*end of NAVBAR*/
+
+
+/* The Modal (background) */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 999;
+    /* Sit on top */
+    padding: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+/* Modal Content */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+
+/* The Close Button */
+
+.close {
+    color: #7b2e40;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #f7a7b2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*submit button*/
+
+button {
+    background-color: #7b2e40;
+    color: #fff;
+    border: #7b2e40;
+}
+
+button:hover {
+    background-color: #fff;
+    color: #7b2e40;
+}
+
+
+/*end submit*/
+
+
+/*dropdown for gender in signup modal*/
+
+select {
+    font-family: Arial;
+    font-size: 20px;
+    color: #000;
+}
+
+
+/*parallax effect*/
+
+.bleh,
+.trending-recipes,
+.bakehacks {
+    position: relative;
+    /* opacity: 0.65; */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bleh {
+    /* background-image: url("img_parallax.jpg"); */
+    min-height: 100%;
+}
+
+.trending-recipes {
+    /* background-image: url("img_parallax2.jpg"); */
+    height: 100%;
+}
+
+.bakehacks {
+    /* background-image: url("img_parallax3.jpg"); */
+    min-height: 600px;
+}
+
+@media only screen and (max-device-width: 1024px) {
+    .bleh,
+    .trending-recipes,
+    .bakehacks {
+        background-attachment: scroll;
+    }
+}
+
+
+/*end parallax effect*/
+
+
+/*search with filters*/
+
+.dropdown.dropdown-lg .dropdown-menu {
+    margin-top: -1px;
+    padding: 6px 20px;
+}
+
+.input-group-btn .btn-group {
+    display: flex !important;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+    margin-left: -1px;
+}
+
+.btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.btn-group .form-horizontal .btn[type="submit"] {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form-group .form-control:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+@media screen and (min-width: 768px) {
+    #adv-search {
+        width: 500px;
+        margin: 0 auto;
+    }
+    .dropdown.dropdown-lg {
+        position: static !important;
+    }
+    .dropdown.dropdown-lg .dropdown-menu {
+        min-width: 500px;
+    }
+}
+
+
+/*end of search filters*/
+
+
+/*my pantry and search buttons*/
+
+.button {
+    opacity: 0.85;
+    background-color: #7b2e40;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 20px;
+    align-self: center;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: Montserrat, sans-serif;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.rounded-button {
+    border-radius: 15px;
+}
+
+
+/*carouselfor trending recipes*/
+
+.container-fluid {
+    text-align: center;
+    padding: none;
+    position: relative;
+    max-width: 100%;
+    margin: none;
+    border: none;
+}
+
+.container-fluid img {
+    vertical-align: middle;
+    padding: none;
+}
+
+.container-fluid .content {
+    font-family: 'Dancing Script', cursive;
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* Black background with transparency */
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+}
+
+.container-fluid .content div.a {
+    font-size: 20px;
+    white-space: nowrap;
+    width: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-fluid .content div.a:hover {
+    overflow: visible;
+}
+
+
+/*end of carousel*/
+
+
+/*horizontal slider for categories*/
+
+.horizontal_categories {
+    white-space: nowrap;
+    background: #fff;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 300px;
+    /* margin: 6px; */
+}
+
+.horizontal__card_categories {
+    vertical-align: text-top;
+    height: 300px;
+    width: 500px;
+    display: inline-block;
+    background: #fff;
+    white-space: normal;
+    /* margin: 3px; */
+    color: #7b2e40;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.cate_image {
+    width: 500px;
+    height: 250px;
+    border: none;
+}
+
+.center {
+    font-variant: small-caps;
+    font-size: 18px;
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    /* display: inline-block !important; */
+}
+
+
+/* end of categories */
+
+
+/* horizontal slider for tips and tricks */
+
+.horizontal_bakehacks {
+    white-space: nowrap;
+    background: #fff;
+    overflow-x: auto;
+    height: 500px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.horizontal__card_bakehacks {
+    vertical-align: -webkit-baseline-middle;
+    height: 475px;
+    width: 500px;
+    display: inline-block;
+    background: #fff;
+    white-space: normal;
+    margin: 3px;
+    /* color: #fff; */
+    margin-left: 50px;
+    margin-right: 50px;
+    /* padding: 50px; */
+}
+
+iframe {
+    position: relative;
+}
+
+.bake-content {
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    text-decoration-color: #7b2e40;
+}
+
+
+/* end of horizontal slider for bakehacks */
+
+
+/* footer */
+
+footer-bs {
+    background-color: #7b2e40;
+    padding: 60px 40px;
+    color: #7b2e40;
+    margin-bottom: 20px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 6px;
+}
+
+.footer-bs .footer-brand,
+.footer-bs .footer-nav,
+.footer-bs .footer-social,
+.footer-bs .footer-ns {
+    padding: 10px 25px;
+}
+
+.footer-bs .footer-nav,
+.footer-bs .footer-social,
+.footer-bs .footer-ns {
+    border-color: transparent;
+}
+
+.footer-bs .footer-brand h2 {
+    margin: 0px 0px 10px;
+}
+
+.footer-bs .footer-brand p {
+    font-size: 12px;
+    color: #7b2e40;
+}
+
+.footer-bs .footer-nav ul.pages {
+    list-style: none;
+    padding: 0px;
+}
+
+.footer-bs .footer-nav ul.pages li {
+    padding: 5px 0px;
+}
+
+.footer-bs .footer-nav ul.pages a {
+    color: #7b2e40;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.footer-bs .footer-nav ul.pages a:hover {
+    color: #7b2e40;
+    text-decoration: none;
+}
+
+.footer-bs .footer-nav h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.footer-bs .footer-nav ul.list {
+    list-style: none;
+    padding: 0px;
+}
+
+.footer-bs .footer-nav ul.list li {
+    padding: 5px 0px;
+}
+
+.footer-bs .footer-nav ul.list a {
+    color: #7b2e40;
+}
+
+.footer-bs .footer-nav ul.list a:hover {
+    color: #7b2e40;
+    opacity: 0.6;
+    text-decoration: none;
+}
+
+.footer-bs .footer-social ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.footer-bs .footer-social h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.footer-bs .footer-social li {
+    padding: 5px 4px;
+}
+
+.footer-bs .footer-social a {
+    color: #7b2e40;
+}
+
+.footer-bs .footer-social a:hover {
+    color: #7b2e40;
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+.footer-bs .footer-ns h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.footer-bs .footer-ns p {
+    font-size: 12px;
+    color: #7b2e40;
+    opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+    .footer-bs .footer-nav,
+    .footer-bs .footer-social,
+    .footer-bs .footer-ns {
+        border-left: solid 1px rgba(255, 255, 255, 0.10);
+    }
+}
+
+
+/*footer end*/
+</style>
 </head>
-
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-
-    <nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
-        <div class="container">
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">&#x2630;</button>=
-            
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar navbar-expand-md">
-                    <li class="nav-item"><a href="#search" class="nav-link">Mad Batter</a>
-                    </li>
-                    <li class="nav-item"><a href="#search" class="nav-link">Search</a>
-                    </li>
-                    <li class="nav-item"><a href="#trending-recipes" class="nav-link">Trending Recipes</a>
-                    </li>
-                    <li class="nav-item"><a href="#category" class="nav-link">Categories</a>
-                    </li>
-                    <li class="nav-item"><a href="#bakehacks" class="nav-link">BakeHacks</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav ml-auto">
-                    <!-- Trigger/Open The Login Modal -->
-                    <li class="nav-item"><a href="#login" class="nav-link"><button id="myBtn-login">LogIn</button></a>
-                    </li>
-                    <!-- Trigger/Open The Signup Modal -->
-                    <li class="nav-item"><a href="#signup" class="nav-link"><button id="myBtn-signup">SignUp</button></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- The Login Modal -->
-    <div id="myModal-login" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-login">&times;</span>
-            <h1>
-                <center>LOGIN</center>
-            </h1>
-
-            <form action=" " method="post" onsubmit="return checkForm(this);">
-                <div class="form-group">
-                    <label for="Inputname">Username</label>
-                    <input type="name" class="form-control" name="Username" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Password</label>
-                    <input type="password" class="form-control" name="pw" required>
-                </div>
-                <br>
-                <center><button type="submit" name="submit">Submit</button></center>
-                <center>
-                    <font size=4px>New to Mad Batter?<br>Create account!</font>
-                </center>
-            </form>
-        </div>
+<nav class='navbar navbar-default navbar-fixed-top'>
+<div class='container'>
+    <div class='navbar-header'>
+        <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#myNavbar'>
+                                  <span class='icon-bar'></span>
+                                  <span class='icon-bar'></span>
+                                  <span class='icon-bar'></span>                        
+                                </button>
+        <a class='navbar-brand' href='UserProfile.php'>Mad Batter</a>
     </div>
-
-    <!-- The Signup Modal -->
-    <div id="myModal-signup" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close-signup">&times;</span>
-
-            <h1>
-                <center>SIGNUP</center>
-            </h1>
-            <form onsubmit="return checkForm(this);" action="">
-                <div class="form-group">
-                    <label for="Inputname"> E-mail</label>
-                    <input type="name" class="form-control" name="Email" placeholder="Enter e-mail" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Password</label>
-                    <input type="password" class="form-control" name="Password" placeholder="Enter Password" minlength=8 required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Confirm Password</label>
-                    <input type="password" class="form-control" name="cpw" placeholder="Re-enter Password" minlength=8 required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Username</label>
-                    <input type="name" class="form-control" name="Username" placeholder="Enter User Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Firstname</label>
-                    <input type="name" class="form-control" name="Firstname" placeholder="Enter First Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputname"> Lastname</label>
-                    <input type="name" class="form-control" name="Lastname" placeholder="Enter Last Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Inputdate">Age</label>
-                    <input type="number" class="form-control" name="Age" placeholder="Enter Age">
-                </div>
-                <div class="dropdown">
-                    <label>Gender</label><br>
-                    <select name="Gender">
-                        <option class="dropdown-item">Male</option>
-                        <option class="dropdown-item">Female</option> 
-                        <option class="dropdown-item">Other</option>  
-                    </select>
-                </div>
-
-
-                <br>
-                <center>
-                    <button type="submit">Submit</button>
-                </center>
-                <center>
-                    <font size=4px>Already have an account?<br>Log In</font>
-                </center>
-            </form>
-        </div>
+    <div class='collapse navbar-collapse' id='myNavbar'>
+        <ul class='nav navbar-nav navbar'>
+            <li><a href='#search'>Search</a></li>
+            <li><a href='#trending-recipes'>Trending Recipes</a></li>
+            <li><a href='#category'>Categories</a></li>
+            <li><a href='#bakehacks'>BakeHacks</a> </li>
+        </ul>
     </div>
+</div>
+</nav><br><br>
+   <form class="form-horizontal" role="form" action="" method="POST">
+             <button class="button rounded-button" name="gotopantry" style="float:right;">Mypantry</button>
+   </form>
 
+   
+   <form class="form-horizontal" role="form" action="" method="POST">
     <!--parallax scrolling effect-->
-    <div class="bleh">
+    <div class="bgimg-1">
     </div>
-    <div class="search" id="search" style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
+    <div class="search" style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
         <div class="container">
             <div class="row">
                 <p></p>
@@ -157,17 +620,19 @@
                 <p></p>
             </div>
             <div class="row">
-                <!-- <div class="container"> -->
+               <!-- <div class="container"> -->
                 <!-- <div class="row"> -->
+				
                 <div class="col-md-12">
+				
                     <div class="input-group" id="adv-search">
-                        <input type="text" class="form-control" placeholder="Search..." />
-                        <div class="input-group-btn">
+                        <input type="text" class="form-control" name="recipename" placeholder="Search..." >
+    <!--                    <div class="input-group-btn">
                             <div class="btn-group" role="group">
                                 <div class="dropdown dropdown-lg">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+                                    <button type="submit" class="btn btn-default dropdown-toggle"  data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                        <form class="form-horizontal" role="form">
+                                        
                                             <div class="form-group">
                                                 <label for="filter">Skill Level</label>
                                                 <select class="form-control">
@@ -187,7 +652,7 @@
                                             <div class="form-group">
                                                 <label for="filter">Prep Time</label>
                                                 <select class="form-control">
-                                                            <option value="0" seleced>10-20 mins</option>
+                                                            <option value="0" selected>10-20 mins</option>
                                                             <option value="1">20-30 mins</option>
                                                             <option value="2">30-40 mins</option>
                                                             <option value="3">40-50 mins</option>
@@ -197,7 +662,7 @@
                                             <div class="form-group">
                                                 <label for="filter">Cook Time Time</label>
                                                 <select class="form-control">
-                                                            <option value="0" seleced>10-20 mins</option>
+                                                            <option value="0" selected>10-20 mins</option>
                                                             <option value="1">20-30 mins</option>
                                                             <option value="2">30-40 mins</option>
                                                             <option value="3">40-50 mins</option>
@@ -205,13 +670,13 @@
                                                         </select>
                                             </div>
                                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
-                                        </form>
-                                    </div>
+                                            </div>
                                 </div>background-
-                                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                            </div>
+                                <button type="button" class="btn btn-primary" name="search1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </div>-->
                         </div>
                     </div>
+					
                 </div>
             </div>
         </div>
@@ -221,12 +686,13 @@
         <div class="col-sm-4">
         </div>
         <div class="col-sm-2">
-            <button class="button rounded-button">MY  PANTRY</button>
+            <button class="button rounded-button" name="pantrysearch">MY  PANTRY</button>
         </div>
 
         <div class="col-sm-1">
-            <button class="button rounded-button">SEARCH</button>
+            <button class="button rounded-button" name="search">SEARCH</button>
         </div>
+
         <div class="col-sm-4"></div>
     </div>
     <div class="row">
@@ -237,7 +703,7 @@
     </div>
     </div>
     </div>
-
+</form>
     <div class="trending-recipes" id="trending-recipes">
         <div class="content">
             <div class="container-fluid">
@@ -313,7 +779,7 @@
                         <div class="horizontal__card_categories"><img class="cate_image" src="Marshmallow-Brownie_HEADER.jpg" alt="Marshmallow Brownies">
                             <div class="center">Brownies</div>
                         </div>
-                        <div class="horizontal__card_categories"><img class="cate_image" src="Truvia-Chocolate-Chip-Cookies_Header.jpg" alt="Chocochip Cookies">
+                        <div class="horizontal__card_categories"><img class="cate_image" src="https://www.handletheheat.com/wp-content/uploads/2018/02/BAKERY-STYLE-CHOCOLATE-CHIP-COOKIES-9-550x550.jpg" alt="Chocochip Cookies">
                             <div class="center">Cookies</div>
                         </div>
                         <!-- <div class="horizontal__card_categories">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero ipsa odit obcaecati, velit commodi enim quod amet veritatis eum! Temporibus voluptates qui aspernatur quaerat rem nobis dicta similique obcaecati porro?</div>
@@ -407,7 +873,8 @@
                     </section>
 
                 </div>
-                <script>
+                
+<script>
                     //smooth scrolling to that section of the webpage
                     $(document).ready(function() {
                         // Add smooth scrolling to all links in navbar + footer link
@@ -443,79 +910,6 @@
                         });
                     })
 
-
-
-                    //login modal
-                    // Get the login modal
-                    var modal1 = document.getElementById('myModal-login');
-
-                    // Get the button that opens the modal
-                    var btn1 = document.getElementById("myBtn-login");
-
-                    // Get the <span> element that closes the modal
-                    var span1 = document.getElementsByClassName("close-login")[0];
-
-                    // When the user clicks the button, open the modal 
-                    btn1.onclick = function() {
-                        modal1.style.display = "block";
-                    }
-
-                    // When the user clicks on <span> (x), close the modal
-                    span1.onclick = function() {
-                        modal1.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal1) {
-                            modal1.style.display = "none";
-                        }
-                    }
-
-                    //end login
-
-                    //signup modal
-                    // Get the signup modal
-                    var modal2 = document.getElementById('myModal-signup');
-
-                    // Get the button that opens the modal
-                    var btn2 = document.getElementById("myBtn-signup");
-
-                    // Get the <span> element that closes the modal
-                    var span2 = document.getElementsByClassName("close-signup")[0];
-
-                    // When the user clicks the button, open the modal 
-                    btn2.onclick = function() {
-                        modal2.style.display = "block";
-                    }
-
-                    // When the user clicks on <span> (x), close the modal
-                    span2.onclick = function() {
-                        modal2.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal1) {
-                            modal2.style.display = "none";
-                        }
-                    }
-
-                    function checkForm(form) {
-                        if (form.Password.value != form.cpw.value) {
-                            alert("Password does not match");
-                            form.Password.focus();
-                            return false;
-                        }
-                        if (form.Age.value <= 0) {
-                            alert("Age should be greater than zero");
-                            form.Age.focus();
-                            return false;
-                        }
-                        return true;
-                    }
-                    //end signup
-                </script>
+ </script>  
 </body>
-
 </html>
