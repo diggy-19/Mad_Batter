@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
-    $('[data-toggle="tooltip"]').tooltip();
+   $('[data-toggle="tooltip"]').tooltip();
     var actions = $("table td:last-child").html();
     // Append table with add row form on add new button click
     $(".add-new").click(function() {
         $(this).attr("disabled", "disabled");
         var index = $("table tbody tr:last-child").index();
         var row = '<tr>' +
-            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
-            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+            '<td><input type="text" class="form-control" name="ingredient" id="ingredient"></td>' +
+            '<td><input type="text" class="form-control" name="qty" id="qty"></td>' +
             '<td>' + actions + '</td>' +
             '</tr>';
         $("table").append(row);

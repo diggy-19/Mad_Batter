@@ -1,6 +1,7 @@
 body {
-    font-family: 'Kotta One';
-    font-size: 18px;
+    font-family: Montserrat, sans-serif;
+    font: 400 15px;
+    line-height: 1.8;
 }
 
 .container {
@@ -154,8 +155,8 @@ table.table td .add {
     line-height: 1.42857143 !important;
     /* letter-spacing: 4px; */
     border-radius: 0;
-    font-family: Kotta One;
-    /* font-variant: small-caps; */
+    font-family: Montserrat, sans-serif;
+    font-variant: small-caps;
 }
 
 .navbar li a,
@@ -180,6 +181,17 @@ table.table td .add {
 
 
 /*end of NAVBAR*/
+
+.button {
+    background-color: #7b2e40;
+    color: #fff;
+    border: #7b2e40;
+}
+
+.button:hover {
+    background-color: #fff;
+    color: #7b2e40;
+}
 
 
 /* footer */

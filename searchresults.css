@@ -10,12 +10,15 @@ body {
     padding: 0;
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
-    height: 100%;
     color: #7b2e40;
 }
 
 
 /*NAVBAR*/
+
+.navbar-default {
+    background-color: #7b2e40;
+}
 
 .navbar {
     margin-bottom: 0;
@@ -140,7 +143,7 @@ select {
     margin-top: 15px;
     margin-left: 15px;
     margin-right: 15px;
-    height: 400;
+    height: 450;
     width: 400;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
@@ -153,6 +156,8 @@ select {
 }
 
 img {
+    width: 400px;
+    height: 300px;
     border-radius: 5px 5px 0 0;
 }
 

@@ -2,8 +2,8 @@
 <?php
 	session_start();
     include("connect.php");
-	 $user= $_SESSION['user_name'];
-    if(isset($_GET['id'])){
+	 //$user= $_SESSION['user_name'];
+	if(isset($_GET['id'])){
   $recipe = $_GET['id'];
  // echo "recipe is" .$recipe;
 } else {
@@ -24,7 +24,6 @@
         $picture=$row['RecipePicture'];
         $video=$row['RecipeVideo'];
     }
-	
     $getingredients="SELECT Quantity,Ingredient FROM `recipe-ingredients` WHERE RecipeName LIKE '%$recipe%'";
     $ingredients=$conn->query($getingredients);
 
@@ -33,27 +32,8 @@
 
     $getreviews="SELECT Review,EmailID FROM `recipe-reviews` WHERE RecipeName LIKE '%$recipe%'";
     $reviews=$conn->query($getreviews);
-	/*
-	if(isset($_GET['post']))
-{
-$Review=$_GET['postreview'];
- $getemail="SELECT EmailID from `user-profile` where Username='$user'";
-	$profile=$conn->query($getemail);
-	while($row = mysqli_fetch_assoc($profile)){
-		$email=$row['EmailID'];
-    }
-
-$sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
- VALUES ('$recipe','$email','$Review')";
-
- if ($conn->query($sql) === TRUE) {
-    //echo "New record created successfully";
-	header("Location:RecipePage.php");
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-}
-*/
+	
+	
     echo"
     <!DOCTYPE html>
     <html lang='en'>
@@ -65,15 +45,15 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
         // <link rel='stylesheet' href='RecipePage_style.css' type='text/css' >
         <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
-        // <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
         <script src='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css'></script>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
         <link href='https://fonts.googleapis.com/css?family=Kotta One' rel='stylesheet'>
         <link href='https://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet'>
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css'></script>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
-        // <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
         <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
         <style>
         body {
@@ -423,7 +403,7 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
         
         
         /*footer end*/
-        </style>
+        </style> 
     </head>
 
     <body>
@@ -434,24 +414,20 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
         <button type='button' class='navbar-toggler' data-toggle='collapse' data-target='#myNavbar'>
             <span class='navbar-toggler-icon'></span>                       
         </button>
-        <a class='navbar-brand' href='home_login.php'>Mad Batter</a>
+        <a class='navbar-brand' href='home.php'>Mad Batter</a>
     </div>
     <div class='collapse navbar-collapse' id='myNavbar'>
         <ul class='nav navbar-nav navbar'>
-            <li><a href='home_login.php'>Search</a></li>
-            <li><a href='home_login.php#trending-recipes'>Trending Recipes</a></li>
-            <li><a href='home_login.php#category'>Categories</a></li>
-            <li><a href='home_login.php#bakehacks'>BakeHacks</a> </li>
-        </ul>
-        <ul class='nav navbar-nav navbar-right'>
-           
-            <li><a href='UserProfile.php'>".$user."</a></li>
-     
-            <li><a href='logout.php'>Log Out</a></li>
+            <li><a href='home.php'>Search</a></li>
+            <li><a href='home.php#trending-recipes'>Trending Recipes</a></li>
+            <li><a href='home.php#category'>Categories</a></li>
+            <li><a href='home.php#bakehacks'>BakeHacks</a> </li>
         </ul>
     </div>
 </div>
 </nav>
+
+
         <!--HEADER-->
         <div class='header'>
             <div class='img-gradient'>
@@ -459,7 +435,7 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
                     <img src='".$picture."' class='img-fluid' alt='".$name."'>
                     <div class='img-title'>
                         <h3 style='font-family:Dancing Script, cursive;'><strong>".$category."</strong></h3>
-                        <h1 style='font-family:Dancing Script, cursive;'><trong>".$name."</strong></h1>
+                        <h1 style='font-family:Dancing Script, cursive;'><strong>".$name."</strong></h1>
                     </div>
                 </div>
             </div>
@@ -559,9 +535,9 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
                     </div>
                     <div class='form-group'>
                         
-                        <textarea class='form-control' rows='5' placeholder='Write your reviews here...' name=\"postreview\"></textarea>
+                        <textarea class='form-control' rows='5' placeholder='Write your reviews here...'></textarea>
                     </div>
-                    <button type='submit' class='btn btn-post' name=\"post\"><a href=\"RecipePage.php?id=.$name\">Post</a></button><br>
+                    <button type='submit' class='btn btn-post'>Post</button><br>
                 </div>
                 <!-- col-sm-7 -->
             </div>
@@ -579,15 +555,15 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
                         <p>© 2018 PVD</p>
                     </div>
                     <div class='col-md-4 footer-nav animated fadeInUp'>
-                        <h4>Menu </h4>
+                        <h4 style='text-align:center;'>Menu </h4>
                         <div class='col-md-6'>
                             <ul class='pages'>
                             <li><a href='home_login.php#search'>Search</a></li>
                             <li><a href='home_login.php#trending-recipes'>Trending Recipes</a></li>
                             <li><a href='home_login.php#category'>Categories</a></li>
                             <li><a href='home_login.php#bakehacks'>Bake Hacks</a></li>
-                            <li><a href='Userprofile.php'>".$user."</a></li>
-                            <li><a href='logout.php'>Log Out</a></li>
+                            <li><a href='#login' id='login-modal'>Log In</a></li>
+                            <li><a href='#signup' id='signup-modal'>Sign up</a></li>
                             </ul>
                         </div>
                         <div class='col-md-6'>
@@ -629,6 +605,8 @@ $sql = "INSERT INTO `recipe-reviews`(`RecipeName`,`EmailID`,`Review`)
         </div>
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
         <script src='RecipePage_js.js'></script>
+        </form>
         
+    </body>
     </html>";
 ?>
