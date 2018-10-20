@@ -11,7 +11,7 @@
 - keep a record of all the recipes you've cooked and how many times they've been cooked.
 - They can find their friends and follow them or they can follow other profiles that they find interesting.
 
-This repository will contain all the necessary files pertaining to our project.</br>
+This repository will contain all the necessary files pertaining to our project.<br>
 For a more detailed description regarding the project, refer to the SRS documentation that has been created with regards to our project. 
 
 For the Home Page, [click here](https://diggy-19.github.io/Mad_Batter/homepage_v2) <br>
