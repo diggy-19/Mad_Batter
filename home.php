@@ -80,37 +80,37 @@ if(isset($_POST['search']))
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<nav class="navbar navbar-default navbar-fixed-top">
-       <div class="container">
-           <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>                       
-                   </button>
-               <a class="navbar-brand" href="#myPage">Mad Batter</a>
-           </div>
-           <div class="collapse navbar-collapse" id="myNavbar">
-               <ul class="nav navbar-nav navbar">
-                   <li><a href="#search">Search</a></li>
-                   <li><a href="#trending-recipes">Trending Recipes</a></li>
-                   <li><a href="#category">Categories</a></li>
-                   <li><a href="#bakehacks">BakeHacks</a> </li>
-               </ul>
-               <ul class="nav navbar-nav navbar-right">
-                   <!-- Trigger/Open The Login Modal -->
-                   <li><a href="#login" id="login-modal">LogIn</a></li>
-                   <!-- Trigger/Open The Signup Modal -->
-                   <li><a href="#signup" id="signup-modal">SignUp</a></li>
-               </ul>
-           </div>
-       </div>
-   </nav>
-   <br>
-   <br>
-   <br>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">&#x2630;</button>=
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar navbar-expand-md">
+                <li class="nav-item"><a href="#search" class="nav-link">Mad Batter</a>
+                </li>
+                <li class="nav-item"><a href="#search" class="nav-link">Search</a>
+                </li>
+                <li class="nav-item"><a href="#trending-recipes" class="nav-link">Trending Recipes</a>
+                </li>
+                <li class="nav-item"><a href="#category" class="nav-link">Categories</a>
+                </li>
+                <li class="nav-item"><a href="#bakehacks" class="nav-link">BakeHacks</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                <!-- Trigger/Open The Login Modal -->
+                <li class="nav-item"><a href="#login" class="nav-link"><button id="myBtn-login">LogIn</button></a>
+                </li>
+                <!-- Trigger/Open The Signup Modal -->
+                <li class="nav-item"><a href="#signup" class="nav-link"><button id="myBtn-signup">SignUp</button></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <!-- The Login Modal -->
-   <div id="myModal-login" class="modal" style="z-index:9999;">
+   <div id="myModal-login" class="modal">
 
        <!-- Modal content -->
        <div class="modal-content">

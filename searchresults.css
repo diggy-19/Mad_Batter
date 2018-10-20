@@ -168,7 +168,7 @@ img {
 .desc-content {
     font-size: 13px;
     white-space: nowrap;
-    width: 45%;
+    width: 30%;
     overflow: hidden;
     text-overflow: ellipsis;
 }

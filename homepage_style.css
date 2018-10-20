@@ -39,13 +39,17 @@ body {
     background-color: #fff !important;
 }
 
-.navbar-default .navbar-toggle {
+.navbar-light .navbar-toggler {
     border-color: transparent;
     color: #7b2e40 !important;
 }
 
 .collapse navbar-collapse {
     border-top: none;
+}
+
+.navbar .navbar-nav .ml-auto {
+    align-self: right;
 }
 
 
